@@ -1,0 +1,4 @@
+module qs.modules.sidebarLeft.widgets
+
+YtMusicTrackItem 1.0 YtMusicTrackItem.qml
+YtMusicPlayerCard 1.0 YtMusicPlayerCard.qml

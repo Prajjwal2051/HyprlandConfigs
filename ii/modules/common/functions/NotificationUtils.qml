@@ -87,6 +87,9 @@ Singleton {
 
     function processNotificationBody(body, appName) {
         let processedBody = body
+
+        // Strip outer <html> wrapper tags that some apps (e.g. KDE drkonqi) include
+        processedBody = processedBody.replace(/^\s*<html[^>]*>([\s\S]*)<\/html>\s*$/i, '$1').trim();
         
         // Clean Chromium-based browsers notifications - remove first line
         if (appName) {

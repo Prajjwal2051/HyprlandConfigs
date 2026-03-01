@@ -9,7 +9,23 @@ import qs.modules.common.widgets
 import qs.modules.common.functions
 
 ContentPage {
+    id: quickConfigRoot
     forceWidth: true
+
+    // Preset theme state tracker
+    FileView {
+        id: presetThemeFile
+        path: Qt.resolvedUrl(`file://${FileUtils.trimFileProtocol(Directories.home)}/.config/illogical-impulse/themes/.current`)
+        watchChanges: true
+        onLoadedChanged: quickConfigRoot.activePresetTheme = presetThemeFile.text().trim()
+        onFileChanged: {
+            reload()
+            quickConfigRoot.activePresetTheme = presetThemeFile.text().trim()
+        }
+    }
+
+    property string activePresetTheme: ""
+    Component.onCompleted: presetThemeFile.reload()
 
     Process {
         id: randomWallProc
@@ -225,6 +241,41 @@ ContentPage {
             onCheckedChanged: {
                 Config.options.appearance.transparency.enable = checked;
             }
+        }
+    }
+
+    ContentSection {
+        id: presetThemeRoot
+        icon: "style"
+        title: Translation.tr("Preset Themes")
+
+        StyledText {
+            Layout.fillWidth: true
+            text: Translation.tr("Quick color presets — replaces the wallpaper-generated palette.")
+            font.pixelSize: Appearance.font.pixelSize.smaller
+            color: Appearance.colors.colSubtext
+            wrapMode: Text.WordWrap
+        }
+
+        ConfigSelectionArray {
+            currentValue: quickConfigRoot.activePresetTheme
+            onSelected: newValue => {
+                Quickshell.execDetached(["bash", "-c",
+                    `'${FileUtils.trimFileProtocol(Directories.home)}/.config/illogical-impulse/themes/qs-theme.sh' '${newValue}'`
+                ])
+                quickConfigRoot.activePresetTheme = newValue
+            }
+            options: [
+                { "value": "catppuccin-mocha",      "displayName": Translation.tr("Ctp Mocha")     },
+                { "value": "catppuccin-macchiato",  "displayName": Translation.tr("Ctp Macchiato") },
+                { "value": "catppuccin-frappe",     "displayName": Translation.tr("Ctp Frappé")   },
+                { "value": "catppuccin-latte",      "displayName": Translation.tr("Ctp Latte")    },
+                { "value": "tokyo-night",           "displayName": Translation.tr("Tokyo Night")  },
+                { "value": "dracula",               "displayName": Translation.tr("Dracula")      },
+                { "value": "nord",                  "displayName": Translation.tr("Nord")         },
+                { "value": "gruvbox-dark",          "displayName": Translation.tr("Gruvbox")      },
+                { "value": "original",              "displayName": Translation.tr("Original")    }
+            ]
         }
     }
 

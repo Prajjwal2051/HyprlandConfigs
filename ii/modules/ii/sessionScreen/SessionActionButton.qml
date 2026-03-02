@@ -18,7 +18,7 @@ RippleButton {
     colBackgroundHover: Appearance.colors.colPrimary
     colRipple: Appearance.colors.colPrimaryActive
     property color colText: (button.down || button.keyboardDown || button.focus || button.hovered) ?
-        Appearance.m3colors.m3onPrimary : Appearance.colors.colOnLayer0
+        Appearance.colors.colOnPrimary : Appearance.colors.colOnLayer0
 
     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
     background.implicitHeight: size

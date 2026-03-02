@@ -123,7 +123,7 @@ Rectangle {
                                     messageData?.role == 'user' ? 'linux-symbolic' : 'desktop-symbolic'
 
                                 colorize: true
-                                color: Appearance.m3colors.m3onSecondaryContainer
+                                color: Appearance.colors.colOnSecondaryContainer
                             }
 
                             MaterialSymbol {
@@ -131,7 +131,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 visible: !modelIcon.visible
                                 iconSize: Appearance.font.pixelSize.larger
-                                color: Appearance.m3colors.m3onSecondaryContainer
+                                color: Appearance.colors.colOnSecondaryContainer
                                 text: messageData?.role == 'user' ? 'person' : 
                                     messageData?.role == 'interface' ? 'settings' : 
                                     messageData?.role == 'assistant' ? 'neurology' : 
@@ -145,7 +145,7 @@ Rectangle {
                             Layout.fillWidth: true
                             elide: Text.ElideRight
                             font.pixelSize: Appearance.font.pixelSize.normal
-                            color: Appearance.m3colors.m3onSecondaryContainer
+                            color: Appearance.colors.colOnSecondaryContainer
                             text: messageData?.role == 'assistant' ? Ai.models[messageData?.model].name :
                                 (messageData?.role == 'user' && SystemInfo.username) ? SystemInfo.username :
                                 Translation.tr("Interface")

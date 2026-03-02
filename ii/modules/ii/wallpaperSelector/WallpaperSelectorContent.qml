@@ -201,7 +201,7 @@ MouseArea {
                                         toggled: root.wallpaperTarget === "background"
                                         buttonRadius: Appearance.rounding.small
                                         colBackgroundToggled: Appearance.colors.colPrimary
-                                        colBackgroundToggledHover: ColorUtils.lighten(Appearance.colors.colPrimary, 0.1)
+                                        colBackgroundToggledHover: Appearance.colors.colPrimaryHover
                                         onClicked: root.wallpaperTarget = "background"
                                         
                                         contentItem: Column {
@@ -231,7 +231,7 @@ MouseArea {
                                         toggled: root.wallpaperTarget === "lockscreen"
                                         buttonRadius: Appearance.rounding.small
                                         colBackgroundToggled: Appearance.colors.colPrimary
-                                        colBackgroundToggledHover: ColorUtils.lighten(Appearance.colors.colPrimary, 0.1)
+                                        colBackgroundToggledHover: Appearance.colors.colPrimaryHover
                                         onClicked: root.wallpaperTarget = "lockscreen"
                                         
                                         contentItem: Column {

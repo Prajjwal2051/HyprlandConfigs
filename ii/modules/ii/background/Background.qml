@@ -42,6 +42,7 @@ Variants {
         property int lastWorkspaceId: relevantWindows[relevantWindows.length - 1]?.workspace.id || 10
         // Wallpaper
         property bool wallpaperIsVideo: Config.options.background.wallpaperPath.endsWith(".mp4") || Config.options.background.wallpaperPath.endsWith(".webm") || Config.options.background.wallpaperPath.endsWith(".mkv") || Config.options.background.wallpaperPath.endsWith(".avi") || Config.options.background.wallpaperPath.endsWith(".mov")
+        property bool wallpaperIsGif: Config.options.background.wallpaperPath.endsWith(".gif") || Config.options.background.wallpaperPath.endsWith(".GIF")
         property string wallpaperPath: wallpaperIsVideo ? Config.options.background.thumbnailPath : Config.options.background.wallpaperPath
         property bool wallpaperSafetyTriggered: {
             const enabled = Config.options.workSafety.enable.wallpaper;
@@ -132,8 +133,8 @@ Variants {
             // Wallpaper
             StyledImage {
                 id: wallpaper
-                visible: opacity > 0 && !blurLoader.active
-                opacity: (status === Image.Ready && !bgRoot.wallpaperIsVideo) ? 1 : 0
+                visible: opacity > 0 && !blurLoader.active && !bgRoot.wallpaperIsGif
+                opacity: (status === Image.Ready && !bgRoot.wallpaperIsVideo && !bgRoot.wallpaperIsGif) ? 1 : 0
                 cache: false
                 smooth: false
                 // Range = groups that workspaces span on
@@ -184,10 +185,29 @@ Variants {
                 height: bgRoot.wallpaperHeight / bgRoot.wallpaperToScreenRatio * bgRoot.effectiveWallpaperScale
             }
 
+            // Animated GIF wallpaper
+            AnimatedImage {
+                id: wallpaperGif
+                visible: bgRoot.wallpaperIsGif && opacity > 0 && !blurLoader.active
+                opacity: bgRoot.wallpaperIsGif ? 1 : 0
+                Behavior on opacity {
+                    animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
+                }
+                cache: false
+                asynchronous: true
+                playing: bgRoot.wallpaperIsGif
+                source: (bgRoot.wallpaperIsGif && !bgRoot.wallpaperSafetyTriggered) ? bgRoot.wallpaperPath : ""
+                fillMode: Image.PreserveAspectCrop
+                x: wallpaper.x
+                y: wallpaper.y
+                width: wallpaper.width
+                height: wallpaper.height
+            }
+
             Loader {
                 id: blurLoader
                 active: Config.options.lock.blur.enable && (GlobalStates.screenLocked || scaleAnim.running)
-                anchors.fill: wallpaper
+                anchors.fill: bgRoot.wallpaperIsGif ? wallpaperGif : wallpaper
                 scale: GlobalStates.screenLocked ? Config.options.lock.blur.extraZoom : 1
                 Behavior on scale {
                     NumberAnimation {
@@ -198,7 +218,7 @@ Variants {
                     }
                 }
                 sourceComponent: GaussianBlur {
-                    source: wallpaper
+                    source: bgRoot.wallpaperIsGif ? wallpaperGif : wallpaper
                     radius: GlobalStates.screenLocked ? Config.options.lock.blur.radius : 0
                     samples: radius * 2 + 1
 

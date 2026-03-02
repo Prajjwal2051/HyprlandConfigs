@@ -251,8 +251,8 @@ Scope {
                     visible: active
                     sourceComponent: DescriptionLabel {
                         text: Translation.tr("Your package manager is running")
-                        textColor: Appearance.m3colors.m3onErrorContainer
-                        color: Appearance.m3colors.m3errorContainer
+                        textColor: Appearance.colors.colOnErrorContainer
+                        color: Appearance.colors.colErrorContainer
                     }
                 }
                 Loader {
@@ -260,8 +260,8 @@ Scope {
                     visible: active
                     sourceComponent: DescriptionLabel {
                         text: Translation.tr("There might be a download in progress")
-                        textColor: Appearance.m3colors.m3onErrorContainer
-                        color: Appearance.m3colors.m3errorContainer
+                        textColor: Appearance.colors.colOnErrorContainer
+                        color: Appearance.colors.colErrorContainer
                     }
                 }
             }

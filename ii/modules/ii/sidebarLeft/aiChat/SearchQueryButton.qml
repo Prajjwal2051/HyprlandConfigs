@@ -40,13 +40,13 @@ RippleButton {
             MaterialSymbol {
                 text: "search"
                 iconSize: 20
-                color: Appearance.m3colors.m3onSurface
+                color: Appearance.colors.colOnSurface
             }
             StyledText {
                 id: text
                 horizontalAlignment: Text.AlignHCenter
                 text: root.query
-                color: Appearance.m3colors.m3onSurface
+                color: Appearance.colors.colOnSurface
             }
         }
     }

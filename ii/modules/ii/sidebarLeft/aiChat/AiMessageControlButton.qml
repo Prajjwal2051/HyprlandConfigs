@@ -16,8 +16,8 @@ GroupButton {
         horizontalAlignment: Text.AlignHCenter
         iconSize: Appearance.font.pixelSize.larger
         text: buttonIcon
-        color: button.activated ? Appearance.m3colors.m3onPrimary :
-            button.enabled ? Appearance.m3colors.m3onSurface :
+        color: button.activated ? Appearance.colors.colOnPrimary :
+            button.enabled ? Appearance.colors.colOnSurface :
             Appearance.colors.colOnLayer1Inactive
 
         Behavior on color {

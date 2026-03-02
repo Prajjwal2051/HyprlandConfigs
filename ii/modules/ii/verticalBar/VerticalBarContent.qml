@@ -215,7 +215,7 @@ Item { // Bar content region
                 colBackgroundToggledHover: Appearance.colors.colSecondaryContainerHover
                 colRippleToggled: Appearance.colors.colSecondaryContainerActive
                 toggled: GlobalStates.sidebarRightOpen
-                property color colText: toggled ? Appearance.m3colors.m3onSecondaryContainer : Appearance.colors.colOnLayer0
+                property color colText: toggled ? Appearance.colors.colOnSecondaryContainer : Appearance.colors.colOnLayer0
 
                 Behavior on colText {
                     animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)

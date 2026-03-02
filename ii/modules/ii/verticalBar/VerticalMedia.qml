@@ -61,7 +61,7 @@ MouseArea {
                 fill: 1
                 text: activePlayer?.isPlaying ? "pause" : "music_note"
                 iconSize: Appearance.font.pixelSize.normal
-                color: Appearance.m3colors.m3onSecondaryContainer
+                color: Appearance.colors.colOnSecondaryContainer
             }
         }
     }

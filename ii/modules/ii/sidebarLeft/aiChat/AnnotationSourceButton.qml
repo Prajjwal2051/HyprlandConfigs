@@ -45,7 +45,7 @@ RippleButton {
                 id: text
                 horizontalAlignment: Text.AlignHCenter
                 text: displayText
-                color: Appearance.m3colors.m3onSurface
+                color: Appearance.colors.colOnSurface
             }
         }
     }

@@ -74,7 +74,7 @@ Rectangle {
                     id: providerName
                     anchors.centerIn: parent
                     font.pixelSize: Appearance.font.pixelSize.large
-                    color: Appearance.m3colors.m3onSecondaryContainer
+                    color: Appearance.colors.colOnSecondaryContainer
                     text: Booru.providers[root.responseData.provider].name
                 }
             }
@@ -272,7 +272,7 @@ Rectangle {
                         Layout.alignment: Qt.AlignVCenter
                         verticalAlignment: Text.AlignVCenter
                         text: "Next page"
-                        color: Appearance.m3colors.m3onSurface
+                        color: Appearance.colors.colOnSurface
                     }
                     MaterialSymbol {
                         Layout.alignment: Qt.AlignVCenter

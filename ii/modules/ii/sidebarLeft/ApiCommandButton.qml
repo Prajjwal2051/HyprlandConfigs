@@ -21,6 +21,6 @@ GroupButton {
     contentItem: StyledText {
         horizontalAlignment: Text.AlignHCenter
         text: buttonText
-        color: Appearance.m3colors.m3onSurface
+        color: Appearance.colors.colOnSurface
     }
 }

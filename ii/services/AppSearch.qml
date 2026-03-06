@@ -30,6 +30,10 @@ Singleton {
             "replace": "steam_icon_$1"
         },
         {
+            "regex": /^brave-.*/i,
+            "replace": "brave-browser"
+        },
+        {
             "regex": /Minecraft.*/,
             "replace": "minecraft"
         },

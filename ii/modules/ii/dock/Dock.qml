@@ -126,6 +126,8 @@ Scope { // Scope
                                 buttonPadding: dockRow.padding
                             }
                             DockSeparator {}
+                            DockMediaButton {}
+                            DockSeparator {}
                             DockButton {
                                 Layout.fillHeight: true
                                 onClicked: GlobalStates.overviewOpen = !GlobalStates.overviewOpen

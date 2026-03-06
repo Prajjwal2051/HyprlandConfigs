@@ -338,6 +338,16 @@ Item { // Bar content region
                     WeatherBar {}
                 }
             }
+
+            // GitHub contributions
+            Loader {
+                Layout.leftMargin: 4
+                active: Config.options.bar.github.enable
+
+                sourceComponent: BarGroup {
+                    GithubBarButton {}
+                }
+            }
         }
     }
 }

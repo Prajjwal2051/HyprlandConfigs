@@ -58,14 +58,21 @@ Item {
             return
         }
         artDownloaded = false
+        // Capture values explicitly — QML bindings do not re-evaluate inside Process
+        artDownloader.targetUrl = root.artUrl
+        artDownloader.targetPath = root.artFilePath
         artDownloader.running = true
     }
 
     Process {
         id: artDownloader
+        property string targetUrl: ""
+        property string targetPath: ""
         command: ["bash", "-c",
-            `[ -f ${root.artFilePath} ] || curl -sSL '${root.artUrl}' -o '${root.artFilePath}'`]
-        onExited: root.artDownloaded = true
+            `mkdir -p '${Directories.coverArt}' && ([ -f '${targetPath}' ] || curl -sSL '${targetUrl}' -o '${targetPath}')`]
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode === 0) root.artDownloaded = true
+        }
     }
 
     ColorQuantizer {
@@ -130,7 +137,10 @@ Item {
                     fillMode: Image.PreserveAspectCrop
                     cache: false
                     asynchronous: true
-                    visible: root.displayedArtFilePath.length > 0
+                    opacity: status === Image.Ready ? 1 : 0
+                    Behavior on opacity {
+                        NumberAnimation { duration: 350; easing.type: Easing.InOutQuad }
+                    }
                 }
 
                 MaterialSymbol {
@@ -169,10 +179,18 @@ Item {
 
             // Now-playing indicator
             MaterialSymbol {
+                id: nowPlayingIcon
                 Layout.alignment: Qt.AlignVCenter
                 text: root.activePlayer?.isPlaying ? "graphic_eq" : "music_note"
                 iconSize: Appearance.font.pixelSize.normal
                 color: "white"
+
+                SequentialAnimation {
+                    running: root.activePlayer?.isPlaying ?? false
+                    loops: Animation.Infinite
+                    NumberAnimation { target: nowPlayingIcon; property: "scale"; to: 1.18; duration: 700; easing.type: Easing.InOutSine }
+                    NumberAnimation { target: nowPlayingIcon; property: "scale"; to: 1.0;  duration: 700; easing.type: Easing.InOutSine }
+                }
             }
         }
     }
@@ -226,8 +244,12 @@ Item {
                         margins: Appearance.sizes.elevationMargin
                     }
                     opacity: root.popupOpen && root.hasMedia ? 1 : 0
+                    scale:   root.popupOpen && root.hasMedia ? 1.0 : 0.96
                     visible: opacity > 0
                     Behavior on opacity {
+                        animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                    }
+                    Behavior on scale {
                         animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
                     }
                     radius: Appearance.rounding.large
@@ -295,6 +317,10 @@ Item {
                                     fillMode: Image.PreserveAspectCrop
                                     cache: false
                                     asynchronous: true
+                                    opacity: status === Image.Ready ? 1 : 0
+                                    Behavior on opacity {
+                                        NumberAnimation { duration: 400; easing.type: Easing.InOutQuad }
+                                    }
                                 }
 
                                 MaterialSymbol {

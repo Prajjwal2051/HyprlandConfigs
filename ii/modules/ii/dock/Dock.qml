@@ -88,9 +88,10 @@ Scope { // Scope
                             anchors.topMargin: Appearance.sizes.elevationMargin
                             anchors.bottomMargin: Appearance.sizes.hyprlandGapsOut
                             color: Appearance.colors.colLayer0
-                            border.width: 1
+                            border.width: 2
                             border.color: Appearance.colors.colLayer0Border
-                            radius: Appearance.rounding.large
+                            // Keep the dock as a pill regardless of configured height.
+                            radius: height / 3.5
                         }
 
                         RowLayout {

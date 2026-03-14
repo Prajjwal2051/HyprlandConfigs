@@ -15,16 +15,22 @@ MouseArea {
     property bool borderless: Config.options.bar.borderless
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     readonly property string cleanedTitle: StringUtils.cleanMusicTitle(activePlayer?.trackTitle) || Translation.tr("No media")
+    readonly property int mediaUpdateInterval: Math.max(180, Config.options.resources.updateInterval ?? 250)
 
     Layout.fillHeight: true
     implicitHeight: mediaCircProg.implicitHeight
     implicitWidth: Appearance.sizes.verticalBarWidth
 
     Timer {
-        running: activePlayer?.playbackState == MprisPlaybackState.Playing
-        interval: Config.options.resources.updateInterval
+        running: root.visible
+            && activePlayer?.playbackState == MprisPlaybackState.Playing
+            && (activePlayer?.length ?? 0) > 0
+        interval: root.mediaUpdateInterval
         repeat: true
-        onTriggered: activePlayer.positionChanged()
+        onTriggered: {
+            if (activePlayer)
+                activePlayer.positionChanged();
+        }
     }
 
     acceptedButtons: Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton | Qt.RightButton | Qt.LeftButton

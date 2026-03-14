@@ -62,9 +62,9 @@ MouseArea {
     Timer {
         id: loadingAnim
         running: root.loading
-        interval: 60
+        interval: 90
         repeat: true
-        onTriggered: root.animPhase += 0.18
+        onTriggered: root.animPhase += 0.14
     }
 
     Timer {

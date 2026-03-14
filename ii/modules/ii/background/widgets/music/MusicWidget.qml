@@ -27,7 +27,8 @@ AbstractBackgroundWidget {
     property real animationPhase: 0
     property int designOffset: 0
     property bool blockStyleClick: false
-    property int waveBars: 72
+    property int waveBars: 52
+    readonly property int animationInterval: root.containsMouse ? 42 : 66
     readonly property int designSeed: hashString(trackSignature)
     readonly property int designMode: (designSeed + designOffset) % 8
 
@@ -56,8 +57,8 @@ AbstractBackgroundWidget {
     implicitHeight: 230
 
     Timer {
-        running: root.isPlaying || root.containsMouse
-        interval: 42
+        running: root.visible && (root.isPlaying || root.containsMouse)
+        interval: root.animationInterval
         repeat: true
         onTriggered: {
             root.animationPhase += 0.2;

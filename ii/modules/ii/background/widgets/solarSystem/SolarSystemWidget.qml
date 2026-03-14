@@ -82,10 +82,10 @@ AbstractBackgroundWidget {
     ]
 
     Timer {
-        running: !root.paused
-        interval: 16
+        running: root.visible && !root.paused
+        interval: 33
         repeat: true
-        onTriggered: root.time += 0.016
+        onTriggered: root.time += 0.033
     }
 
     onClicked: mouse => {

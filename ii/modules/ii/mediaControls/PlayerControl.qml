@@ -25,6 +25,7 @@ Item { // Player instance
     property real maxVisualizerValue: 1000 // Max value in the data points
     property int visualizerSmoothing: 2 // Number of points to average for smoothing
     property real radius
+    readonly property int mediaUpdateInterval: Math.max(180, Config.options.resources.updateInterval ?? 250)
 
     property string displayedArtFilePath: root.downloaded ? Qt.resolvedUrl(artFilePath) : ""
 
@@ -51,11 +52,14 @@ Item { // Player instance
     }
 
     Timer { // Force update for revision
-        running: root.player?.playbackState == MprisPlaybackState.Playing
-        interval: Config.options.resources.updateInterval
+        running: root.visible
+            && root.player?.playbackState == MprisPlaybackState.Playing
+            && (root.player?.length ?? 0) > 0
+        interval: root.mediaUpdateInterval
         repeat: true
         onTriggered: {
-            root.player.positionChanged()
+            if (root.player)
+                root.player.positionChanged();
         }
     }
 

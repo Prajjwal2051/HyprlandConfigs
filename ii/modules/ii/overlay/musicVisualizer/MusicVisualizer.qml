@@ -29,12 +29,13 @@ StyledOverlayWidget {
     readonly property string totalText: StringUtils.friendlyTimeForSeconds(trackLength)
     readonly property string remainingText: `-${StringUtils.friendlyTimeForSeconds(remainingTime)}`
 
-    property int barCount: 44
+    property int barCount: 36
     property real animationPhase: 0
+    readonly property int animationInterval: interactionArea.containsMouse ? 42 : 66
 
     Timer {
-        running: root.isPlaying || interactionArea.containsMouse
-        interval: 42
+        running: root.visible && (root.isPlaying || interactionArea.containsMouse)
+        interval: root.animationInterval
         repeat: true
         onTriggered: {
             root.animationPhase += 0.22;

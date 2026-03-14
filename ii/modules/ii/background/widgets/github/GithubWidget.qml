@@ -44,10 +44,10 @@ AbstractBackgroundWidget {
 
     Timer {
         id: loadingAnim
-        running: root.loading
-        interval: 60
+        running: root.visible && root.loading
+        interval: 90
         repeat: true
-        onTriggered: root.animPhase += 0.18
+        onTriggered: root.animPhase += 0.14
     }
 
     function fetchContributions() {
@@ -90,7 +90,7 @@ AbstractBackgroundWidget {
 
     Timer {
         interval: 900000 // 15 minutes
-        running: true
+        running: root.visible
         repeat: true
         onTriggered: root.fetchContributions()
     }

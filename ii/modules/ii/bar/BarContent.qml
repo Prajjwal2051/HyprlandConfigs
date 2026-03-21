@@ -106,7 +106,7 @@ Item { // Bar content region
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
         }
-        spacing: 4
+        spacing: 8
 
         BarGroup {
             id: leftCenterGroup
